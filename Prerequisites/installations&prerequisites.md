@@ -82,4 +82,86 @@ Creating an AWS account is the first step toward learning cloud computing. This 
 - Save these credentials securely (they won’t be shown again)
 - Click **Close**
 ---
+## **Step-by-Step EC2 Instance Setup**
 
+### **Step 1: Log in to AWS Console**
+- Go to [AWS Management Console](https://aws.amazon.com/console/)
+- Sign in with your AWS account credentials
+- Navigate to **EC2 Dashboard**
+
+### **Step 2: Launch a New EC2 Instance**
+- Click **Launch Instance**
+- Enter an instance name
+
+### **Step 3: Choose an Amazon Machine Image (AMI)**
+- Select an OS
+- Click **Select**
+
+### **Step 4: Choose an Instance Type**
+- Select a suitable instance type:
+  - **t3.xlarge+** (For heavier workloads)
+- Click **Next**
+
+### **Step 5: Configure Instance Details**
+- Keep the default **VPC & Subnet** (unless customizing networking)
+- Enable **Auto-assign Public IP** (for internet access)
+- Click **Next**
+
+### **Step 6: Add Storage**
+- Default storage: 8GB but you can change that to 30 GB as we will download a lot of container images related to the project.
+- Click **Next**
+
+### **Step 7: Configure Security Group**
+- Create a new security group or use an existing one
+- Allow **SSH (port 22)** for Linux instances
+
+### **Step 8: Generate or Select a Key Pair**
+- Select **Create a new key pair**
+- Choose **RSA** format and download the `.pem` file
+- **Store the key securely** (You will need it to access your instance)
+- Click **Launch Instance**
+
+### **Step 9: Connect to Your EC2 Instance**
+- Navigate to **EC2 Dashboard** → **Instances**
+- Select the instance and click **Connect**
+
+#### **For Linux Instances:**
+- Use SSH from terminal:
+  ```bash
+  ssh -i /path/to/your-key.pem ec2-user@your-instance-public-ip
+  ```
+---
+# Docker Installation on Ubuntu EC2
+
+In this lecture, we will learn how to Install Docker on ubuntu EC2.
+
+### Add Docker's official GPG key:
+```
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+```
+
+### Add the repository to Apt sources:
+```
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+### Install Docker
+
+```
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+### Verify Docker Installation
+
+```
+sudo docker run hello-world
+```
+---
