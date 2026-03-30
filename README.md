@@ -9,4 +9,7 @@
 4)create docker
 5)create kubectl
 6)create terraform
+--
+##### Run the project locally without kubernetes
+
 
